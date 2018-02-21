@@ -51,8 +51,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routes
 app.use('/api', function (req, res, next) {
 
+    if (!settings.exclude) {
+        return next();
+    }
+
     var method = req.path.substring(1,req.path.length);
-    console.log('method', method);
+
     switch (method) {
         case 'getblock':
             if (req.query && req.query.hash && req.query.hash) {
