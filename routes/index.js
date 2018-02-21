@@ -36,7 +36,9 @@ function route_get_block(res, blockhash) {
 /* GET functions */
 
 function route_get_tx(res, txid) {
-  if (txid == settings.genesis_tx) {
+  if (settings.exclude_txs.indexOf(txid) !== -1) {
+    route_get_index(res, 'Tx not found:' + txid);
+  } else if (txid == settings.genesis_tx) {
     route_get_block(res, settings.genesis_block);
   } else {
     db.get_tx(txid, function(tx) {

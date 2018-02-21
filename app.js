@@ -49,6 +49,42 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
+app.use('/api', function (req, res, next) {
+
+    var method = req.path.substring(1,req.path.length);
+    console.log('method', method);
+    switch (method) {
+        case 'getblock':
+            if (req.query && req.query.hash && req.query.hash) {
+                var excludeBlock = settings.exclude_blocks.find(function (blockId) {
+                    var reg = new RegExp(blockId);
+                    return reg.test(req.query.hash);
+                });
+
+                if (excludeBlock) {
+                    return res.status(404).send('Not found');
+                }
+
+            }
+        case 'getrawtransaction':
+
+            if (req.query && req.query.txid && req.query.txid) {
+                var excludeTx = settings.exclude_txs.find(function (txid) {
+                    var reg = new RegExp(txid);
+                    return reg.test(req.query.txid);
+                });
+
+                if (excludeTx) {
+                    return res.status(404).send('Not found');
+                }
+
+            }
+
+            break;
+    }
+
+    return next();
+});
 app.use('/api', bitcoinapi.app);
 app.use('/', routes);
 app.use('/ext/getmoneysupply', function(req,res){
@@ -65,7 +101,9 @@ app.use('/ext/getaddress/:hash', function(req,res){
         sent: (address.sent / 100000000),
         received: (address.received / 100000000),
         balance: (address.balance / 100000000).toString().replace(/(^-+)/mg, ''),
-        last_txs: address.txs,
+        last_txs: address.txs.filter(function (tx) {
+            return !tx.is_crowdsale;
+        })
       };
       res.send(a_ext);
     } else {
