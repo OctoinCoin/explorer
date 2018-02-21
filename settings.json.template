@@ -158,7 +158,7 @@
   //  "JSoEdU717hvz8KQVq2HfcqV9A79Wihzusu": {"label": "Developers address", "type":"primary", "url":"http://example.com"},
   //  "JSWVXHWeYNknPdG9uDrcBoZHztKMFCsndw": {"label": "Cryptsy"}
   },
-   "exclude": false,
+   "api_exclude": false,
    "exclude_blocks": []
    "exclude_txs": []
 }

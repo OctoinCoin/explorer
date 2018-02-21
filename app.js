@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routes
 app.use('/api', function (req, res, next) {
 
-    if (!settings.exclude) {
+    if (!settings.api_exclude) {
         return next();
     }
 
