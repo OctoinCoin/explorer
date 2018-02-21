@@ -11,7 +11,7 @@ var express = require('express')
   , db = require('./lib/database')
   , locale = require('./lib/locale')
   , request = require('request');
-
+var os = require('os');
 var app = express();
 
 // bitcoinapi
@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routes
 app.use('/api', function (req, res, next) {
 
-    if (!settings.api_exclude) {
+    if (!settings.api_exclude || (req.connection.remoteAddress && req.connection.remoteAddress.indexOf('127.0.0.1') !== -1)) {
         return next();
     }
 
