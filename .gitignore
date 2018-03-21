@@ -28,4 +28,6 @@ settings.json
 .idea
 *~
 
+package-lock.json
+
 
