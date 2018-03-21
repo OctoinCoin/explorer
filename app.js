@@ -97,6 +97,16 @@ app.use('/ext/getmoneysupply', function(req,res){
   });
 });
 
+app.use('/ext/supply', function(req, res) {
+  lib.get_balance_supply(function(err, supply) {
+    if (err) {
+      return res.status(500).send('Internal Server Error')
+    }
+        
+    return res.send(supply);
+  })
+});
+
 app.use('/ext/getaddress/:hash', function(req,res){
   db.get_address(req.param('hash'), function(address){
     if (address) {

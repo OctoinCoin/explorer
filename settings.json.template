@@ -159,6 +159,8 @@
   //  "JSWVXHWeYNknPdG9uDrcBoZHztKMFCsndw": {"label": "Cryptsy"}
   },
    "api_exclude": false,
-   "exclude_blocks": []
-   "exclude_txs": []
+   "exclude_blocks": [],
+   "exclude_txs": [],
+
+   "exclude_address": "oR1HiHvumQ8jnr88DpkRD5WW94fS6q1j7X"
 }
